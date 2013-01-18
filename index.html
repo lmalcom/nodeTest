@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	</head>
+	<body>
+		<h1>Register as a user!</h1> 
+		<form action="/register" id="registerForm" method="post">
+			<ul>
+				<li>
+					<label for="username">Username</label>
+					<input id="username" type="" name="username"> 
+				</li>
+				<li>
+					<label for="password">Password</label>
+					<input id="password" type="password" name="password"> 
+				</li>
+				<li>
+					<label for="email">Email</label>
+					<input id="email" type="email" name="email"> 
+				</li>
+				<input type="submit" value="register" name="register">
+			</ul>
+		</form>
+		<br>
+		<em id="status">Please choose a username and password!</em>
+		<h1 id="message">oh hey now brown cow!</h1> 
+		<script>
+			$('#registerForm').submit(function(event){
+				//prevent form from submitting
+				event.preventDefault(); 
+				
+				//prepare data to send
+				var form = $(this),
+					usname = form.find('input[name = "username"]').val(), 
+					pass = form.find('input[name = "password"]').val(), 
+					em = form.find('input[name = "email"]'), 
+					URL = form.attr('action'); 
+					
+				var DATA = {
+					username : "'" + usname + "'",
+					password : "'" + pass + "'", 
+					email 	 : "'" + em + "'"
+				}; 
+					
+				//send data and wait for response
+				$.ajax({
+					type:'POST', 
+					url: URL,
+					data : JSON.stringify(DATA), 
+					success: function(response){				
+						$('#status').html(response.status);
+						$('#message').text(response.status); 
+						alert('you just got something back from the server: '+ response.status);  
+					}, 
+					error: function(jqXHR, status, error){
+						alert('jqXHR: ' +jqXHR+', status :' + status + ', error: ' + error); 
+					}, 
+					contentType: "application/json; charset=utf-8",
+    				dataType: "json"
+				}); 
+			}); 
+		</script>
+	</body>
+</html>
+

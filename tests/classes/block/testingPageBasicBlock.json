@@ -1,0 +1,32 @@
+{
+  "name": "Testing Page",
+  "classes":[
+    "ViewBlock",
+    "HTMLContainer",
+    "Container",
+    "HTMLBlock",
+    "Page"
+  ],
+  "content": {
+    "blockClass":"Page",
+    "children":[
+      {
+        "blockClass":"Block"
+      },
+      {
+        "blockClass":"HTMLContainer",
+        "children":[
+          {
+            "blockClass":"HTMLBlock"
+          },
+          {
+            "blockClass":"HTMLContainer"
+          }
+        ]
+      },
+      {
+        "blockClass":"HTMLBlock"
+      }
+    ]
+  }
+}

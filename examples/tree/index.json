@@ -1,0 +1,49 @@
+{
+  "name": "test5 ",
+  "classes": [
+    "Tree"
+  ],
+  "content": {
+    "view": {
+      "blockClass": "Page"
+    },
+    "children": [
+      {
+        "blockClass":"Tree", 
+        "settings":{
+          "x": 100, 
+          "y": -100, 
+          "scaleX": ".2", 
+          "scaleY": ".2"
+        }
+      }, 
+      {
+        "blockClass":"Tree", 
+        "settings":{
+          "x": 200, 
+          "y": -100, 
+          "scaleX": ".2", 
+          "scaleY": ".2"
+        }
+      }, 
+      {
+        "blockClass":"Tree", 
+        "settings":{
+          "x": 300, 
+          "y": -100, 
+          "scaleX": ".2", 
+          "scaleY": ".2"
+        }
+      }, 
+      {
+        "blockClass":"Tree", 
+        "settings":{
+          "x": 400, 
+          "y": -100, 
+          "scaleX": ".2", 
+          "scaleY": ".2"
+        }
+      }    
+    ]
+  }
+}

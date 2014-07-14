@@ -15,6 +15,8 @@ define(["HTMLContainer", "postal"], function(HTMLContainer, Postal){
 			} 
 		}), 
 		render: function(){ 
+            var x = document.getElementsByTagName("TITLE")[0]; 
+            x.text = this.name || 'BlocksJS'; 
 			//generic render call 
 			HTMLContainer.prototype.render.call(this); 
 			$('body').append(this.el); 

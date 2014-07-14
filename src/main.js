@@ -61,11 +61,23 @@ require.config({
 			location: '../modules', 
 			main: 'PageLoader' 
 		}, 
-	]
+        {
+			name: 'socketio', 
+			location: 'http://' + window.location.hostname + ':8800', 
+			main: 'socket.io/socket.io.js'
+		}, 
+	] 
 }); 
-require(['core', 'json!/examples/interface/index.json'], function(core, settings){
-	console.log('settings', settings); 
-	var blocks = window.blocks = new core(settings, function(){
+    
+//testing 
+//for now use  use the index.json file and or get it from examples. 
+//this should be changed eventually to have routes set up as an options in the main settings 
+var jsonFile = (window.location.pathname === '/')? 
+    '/index.json': 
+    window.location.pathname + '/index.json'; 
+      
+require(['core', 'json!' + jsonFile ], function(core, settings){ 
+	var blocks = window.blocks = new core(settings, function(){ 
 		//start module 
 	}); 
 }); 

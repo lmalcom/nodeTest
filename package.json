@@ -4,7 +4,10 @@
   "dependencies": {
     "mocha": "",
     "chai": "",
-    "requirejs": "~2.1.11", 
-    "express":""
+    "requirejs": "", 
+    "express":"", 
+    "socket.io":"", 
+    "redis":"", 
+    "hiredis":""
   }
 }

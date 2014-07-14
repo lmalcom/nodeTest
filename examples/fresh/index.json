@@ -1,0 +1,71 @@
+{
+  "name": "test5 ",
+  "classes": [
+    "HTMLContainer", 
+    "ImageButton", 
+    "TextImageButtonContainer", 
+    "TextImageButton"
+  ],
+  "content": {
+    "view": {
+      "blockClass": "Page", 
+        "css":{
+            "padding":"10px", 
+            "box-sizing":"border-box", 
+            ".Block": {
+                "overflow":"hidden"
+            }
+        }
+    },
+    "children": [
+      {
+                "blockClass":"TextImageButtonContainer", 
+                  "settings":{
+                      "css":{
+                          "width":"33.33333%", 
+                          "background":"rgba(0,0,0,.3)", 
+                          "position":"relative", 
+                          "width":"100%", 
+                          "height":"50%", 
+                          ".TextImageButton":{
+                              "width":"33.33333%"
+                          }
+                       }, 
+                      "img":[
+                          "http://img.foodnetwork.com/FOOD/2012/12/20/fnd_Hot-Peppers-2013-Trends_s4x3_lg.jpg", 
+                          "http://stuffpoint.com/food-network/image/174206-food-network-foodnetwork.jpg", 
+                          "http://3.bp.blogspot.com/-YogtSE2qnSw/TfNNUCSds-I/AAAAAAAAAJo/ofyYhir2nsI/s1600/food%2Bnetwork.jpg"
+                      ], 
+                      "text":[
+                          "test1", "test2", "test3"
+                      ]
+                  }
+      }, 
+      {
+                "blockClass":"TextImageButtonContainer", 
+                  "settings":{
+                      "css":{
+                          "width":"100%", 
+                          "height":"50%", 
+                          ".TextImageButton":{
+                              "width":"20%"
+                          }, 
+                          ".TextImageButton:hover":{
+                              "-webkit-transform":"rotateX(360deg)"
+                          }
+                       }, 
+                      "img":[
+                          "http://img.foodnetwork.com/FOOD/2010/12/28/FNM_010111-WNDinners-046_s4x3_lead.jpg", 
+                          "http://www.southwest-wine-guide.com/images/smelling-wine.jpg", 
+                          "http://www.thcfinder.com/uploads/files/making-medicated-lasagna-recipe.jpg", 
+                          "http://images.bwbx.io/cms/2012-06-25/0625_gigaOM_630x420.jpg",
+                          "http://oddstuffmagazine.com/wp-content/uploads/2013/08/Creative-Food-Art-23.jpg"
+                      ], 
+                      "text":[
+                          "test1", "Wine Tasting", "How to make Lasagna","Foodmageddon!", "Deviled Egg Art"
+                      ]
+                  }
+       }
+    ]
+  }
+}

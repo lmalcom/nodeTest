@@ -1,0 +1,22 @@
+{
+  "name": "test ",
+  "classes": [
+    "HTMLContainer", 
+    "Form"
+  ],
+  "content": { 
+    "view": { 
+      "blockClass": "Page" 
+    }, 
+    "children": [ 
+      { 
+        "blockClass":"Visualizer", 
+        "settings":{
+            "ins":[
+                ["test", "*", "form"]
+            ]
+        }
+      }   
+    ] 
+  } 
+} 

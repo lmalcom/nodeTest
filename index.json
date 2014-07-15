@@ -2,7 +2,7 @@
   "name": "test ",
   "classes": [
     "HTMLContainer", 
-    "Form"
+    "Navbar"
   ],
   "content": { 
     "view": { 
@@ -10,10 +10,11 @@
     }, 
     "children": [ 
       { 
-        "blockClass":"Visualizer", 
+        "blockClass":"Navbar", 
         "settings":{
-            "ins":[
-                ["test", "*", "form"]
+            "settingsText":"My Stuff", 
+            "text":[
+                "About", "Contact", "Something Awesome"
             ]
         }
       }   

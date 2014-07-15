@@ -106,10 +106,17 @@ define(['io'], function(io){
         }else if(collection.settings){ 
             if(!collection.blockClass) return new Error('should specify blockClass'); 
             var ret = _extractVals(collection.settings, settingsOb); 
-            colSettings.push({ 
-                blockClass: collection.blockClass, 
-                settings: ret 
-            });         
+            var ob = (collection.subcollection || collection.children)?
+                { 
+                    blockClass: collection.blockClass, 
+                    settings: ret, 
+                    subcollection: _extractValsCollection((collection.subcollection || collection.children), settingsOb) 
+                }:
+                {
+                    blockClass: collection.blockClass, 
+                    settings: ret
+                }; 
+            colSettings.push(ob);         
 
         //else if it is the variable number of things {'blockClass':{settings for them}, 'blockClass2':{settings}} etc
         }else{ 
@@ -129,16 +136,25 @@ define(['io'], function(io){
                 }else{ 
                     var blockClass = val.blockClass || key; 
                     var returnArr = _setVals(_extractVals(val.settings, settingsOb)); 
+                    
                     _.each(returnArr, function(setting){ 
                         var thing = { 
                             "settings": setting, 
                             blockClass: blockClass 
                         };
-                        var otherThing = {
-                            settings: setting,
-                            blockClass: blockClass
-                        };
-
+                        var otherThing = (val.subcollection || val.children)?
+                            {
+                                settings: setting,
+                                blockClass: blockClass, 
+                                subcollection: _extractValsCollection((val.subcollection || val.children), settingsOb) 
+                            }:    
+                            {
+                                settings: setting,
+                                blockClass: blockClass
+                            };
+                        
+                        
+                        
                         //SUPER STRANGE BUG!!!!
                         //IF you check both of these objects in the console they should be the same BUT 
                         //the object that gets pushed to colSettings actually has a model and view object, which it should not. 
@@ -151,7 +167,11 @@ define(['io'], function(io){
             }); 
         }
         
-
+        if(collection.children || collection.subcollection){
+            var chil = collection.children || collection.subcollection; 
+            colSettings.subcollection = _extractValsCollection(chil, settingsOb); 
+            console.log(colSettings); 
+        }
         //return the collection of models/views 
         return colSettings;             
     }; 
@@ -297,7 +317,7 @@ define(['io'], function(io){
 
                 //get models and views from substates 
                 _.each(subcol, function(substate){ 
-                    createBlock.call(ret.view, substate, function(state){
+                    createBlock.call(ret.view, substate, function(state){ 
                         arr.push(state); 
                         modarr.add(state.model); 
                         viewarr.add(state.view); 

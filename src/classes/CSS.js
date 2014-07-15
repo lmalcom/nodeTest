@@ -117,20 +117,6 @@ define(['require','jquery', 'underscore', 'backbone'], function(require, $, _, B
 					}						
 				}); 
 				
-
-				//append .Class {classCSS} for the parent 
-				/*CSSstring += css.renderDOMString(parent.constructor.prototype.defaultCSS, '.' + parent.blockClass); 
-			
-				//let children define their class css as well 
-				if( parent.subcollection && parent.subcollection.length > 0){ 
-					parent.subcollection.each(function(view){ 
-						if(!classes[view.blockClass] && view.css){ 
-							CSSstring += view.css.renderDefaultCSS(); 
-							classes[view.blockClass] = true; 
-						}
-					}); 
-				}; 		
-				console.log(CSSstring); */			
 				return CSSstring;  
 			},
 

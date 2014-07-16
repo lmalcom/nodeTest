@@ -1,22 +1,26 @@
-{
-  "name": "test ",
-  "classes": [
-    "HTMLContainer", 
-    "Navbar"
-  ],
+{ 
+  "name": "test ", 
+  "classes": [ 
+    "HTMLContainer",  
+    "Slider" 
+  ], 
   "content": { 
     "view": { 
       "blockClass": "Page" 
     }, 
     "children": [ 
       { 
-        "blockClass":"Navbar", 
-        "settings":{
-            "settingsText":"My Stuff", 
-            "text":[
-                "About", "Contact", "Something Awesome"
-            ]
-        }
+        "blockClass":"Slider", 
+        "settings":{ 
+            "header":"My Stuff", 
+            "css":{ 
+                 
+            }, 
+            "type":"Button", 
+            "text":[ 
+                "About", "Contact", "Something Awesome","About", "Contact", "Something Awesome","About", "Contact", "Something Awesome","About", "Contact", "Something Awesome"
+            ] 
+        } 
       }   
     ] 
   } 

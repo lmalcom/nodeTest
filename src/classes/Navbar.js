@@ -18,6 +18,7 @@ define(['HTMLContainer', 'Button'], function(HTMLContainer){
             '.HTMLContainer':{
                 "width":"100%", 
                 "height":"auto", 
+                "max-height":window.innerHeight - 60 + 'px', 
                 "max-width":"400px",
                 "padding":"10px", 
                 "box-sizing":"border-box", 
@@ -29,7 +30,6 @@ define(['HTMLContainer', 'Button'], function(HTMLContainer){
                 "@media only screen and (min-width : 200px) and (max-width : 768px)":{
                     "height":"0", 
                     "padding":"0", 
-                    "overflow":"hidden", 
                     ".Button":{
                         "height":"60px"
                     }
@@ -48,7 +48,7 @@ define(['HTMLContainer', 'Button'], function(HTMLContainer){
                   "blockClass":"Button", 
                   "className":"settingsbtn", 
                   "settings":{
-                      "text":"settings.settingsText"
+                      "text":"settings.header"
                   }
               },
               {

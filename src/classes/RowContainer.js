@@ -4,7 +4,7 @@ define(['HTMLContainer'], function(HTMLContainer){
 		superClass: 'HTMLContainer', 
 		super: HTMLContainer.prototype, 
 		defaultCSS: _.extend({}, HTMLContainer.prototype.defaultCSS, { 
-			'height':'70px', 
+			//'height':'70px', 
 			'.HTMLBlock': { 
 				'min-width':0, 
 				'min-height':0, 
@@ -38,17 +38,17 @@ define(['HTMLContainer'], function(HTMLContainer){
 			view: {
 				distribution: 'settings.distribution'
 			}, 
-			children: [ 
-				//stump 
-				{ 
-					'Button':{ 
-						settings: { 
-							text: 'settings.text.*', 
-							message: 'settings.message.*' 
-						}					
-					} 
-				} 
-			] 
+// 			children: [ 
+// 				//stump 
+// 				{ 
+// 					'Button':{ 
+// 						settings: { 
+// 							text: 'settings.text.*', 
+// 							message: 'settings.message.*' 
+// 						}					
+// 					} 
+// 				} 
+// 			] 
 		}, 
 		setRows: function(child){  
 			var container = this;  

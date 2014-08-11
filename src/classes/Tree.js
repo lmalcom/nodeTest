@@ -30,7 +30,7 @@ define(['HTMLContainer'], function(HTMLContainer){
 			children: [
 				//stump
 				{
-					'HTMLBlock':{
+					'settings.stumpclass':{
 						settings: {
 							x: [-100, 100, -100, 100, -100, 100], 
 							y: [500, 500, 700, 700, 900, 900], 

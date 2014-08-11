@@ -18,7 +18,9 @@ define(['Button'], function(Button){
 				message: 'settings.message'
 			}, 
 			view: {
-				css: 'settings.css'
+				css: 'settings.css', 
+                x: 'settings.x', 
+                y: 'settings.y'
 			}			
 		}, 
 		template: 	function(dat){ 

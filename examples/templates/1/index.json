@@ -76,11 +76,8 @@
           "settings":{
               "css":{
                   "height":"150px", 
-                  ".DescriptionBox":{
-                      "position":"relative", 
+                  ".Block":{
                       "float":"left", 
-                      "height":"100%", 
-                      "width":"33.33333333%", 
                       "color":"darken(@mainColor, 30%)",
                       ".Image":{
                           "width":"100%", 
@@ -97,49 +94,13 @@
               }  
           },
           "children":[
-             { 
-                  "DescriptionBox":{
-                      "settings":{
-                          "img":[
-                              "http://img.foodnetwork.com/FOOD/2012/12/20/fnd_Hot-Peppers-2013-Trends_s4x3_lg.jpg", 
-                              "http://stuffpoint.com/food-network/image/174206-food-network-foodnetwork.jpg", 
-                              "http://3.bp.blogspot.com/-YogtSE2qnSw/TfNNUCSds-I/AAAAAAAAAJo/ofyYhir2nsI/s1600/food%2Bnetwork.jpg"
-                          ], 
-                          "inputs":[
-                              [
-                                  {
-                                      "type":"h1", 
-                                      "text":"Big Title"
-
-                                  }, 
-                                  {
-                                      "text":"The subteeeeext"
-                                  }
-                              ], 
-                              [
-                                  {
-                                      "type":"h1", 
-                                      "text":"Big Title 2" 
-
-                                  }, 
-                                  {
-                                      "text":"The subteeeeext"
-                                  }
-                              ], 
-                              [
-                                  {
-                                      "type":"h1", 
-                                      "text":"Big Title 3" 
-
-                                  }, 
-                                  {
-                                      "text":"The subteeeeext"
-                                  }
-                              ]
-                          ]
+            {
+                "Cube":{
+                    "settings":{
+                          "type":["Video", "Image", "ImageButton", "Text", "HTMLBlock", "Image"]
                       }
-                  }
-              } 
+                }
+            }
           ]
       },
       {
@@ -186,12 +147,6 @@
                       ]
                   ]
               }
-          }
-      }, 
-      {
-          "blockClass":"Video", 
-          "settings":{
-              
           }
       }
     ] 

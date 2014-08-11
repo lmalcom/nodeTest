@@ -35,6 +35,7 @@ define(['HTMLContainer'], function(HTMLContainer){
                       {
                           "blockClass":"ImageButton", 
                           "settings":{
+                              "text":"settings.text", 
                               "img":"settings.img", 
                               "css":{
                                   "position":"absolute", 

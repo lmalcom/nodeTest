@@ -1,0 +1,22 @@
+{ 
+  "name": "test ", 
+  "classes": [ 
+    "HTMLContainer",  
+    "./Cube.js" 
+  ], 
+  "content": { 
+    "view": { 
+      "blockClass": "Page" 
+    }, 
+    "children": [ 
+      { 
+        "blockClass":"./Cube.js", 
+          "settings":{
+              "type":"Video", 
+              "x":"500", 
+              "y":"300"
+          }
+      }
+    ]
+  } 
+} 

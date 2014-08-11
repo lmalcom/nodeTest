@@ -14,8 +14,12 @@ define(['ViewBlock', 'CSS'], function(ViewBlock, CSS){
 		skeleton: {
 			view: {
 				x: 'settings.x', 
-				y: 'settings.y', 
-				css: 'settings.css'
+				y: 'settings.y',
+                z: 'settings.z', 
+				css: 'settings.css', 
+                rotateX: 'settings.rotateX', 
+                rotateY: 'settings.rotateY', 
+                rotateZ: 'settings.rotateZ'
 			} 
 		}, 
 		template: 	function(dat){ 

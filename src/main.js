@@ -79,5 +79,6 @@ var jsonFile = (window.location.pathname === '/')?
 require(['core', 'json!' + jsonFile ], function(core, settings){ 
 	var blocks = window.blocks = new core(settings, function(){ 
 		//start module 
+        console.log('the page should be ready...'); 
 	}); 
 }); 

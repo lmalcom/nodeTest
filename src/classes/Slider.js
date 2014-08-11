@@ -59,9 +59,10 @@ define(['HTMLContainer', 'Button', 'RowContainer'], function(HTMLContainer){
                           }, 
                           "children":[ 
                               { 
-                                  "Button":{ 
+                                  "settings.type":{ 
                                      "settings":{ 
-                                          "text": "settings.text.*" 
+                                          "text": "settings.text.*", 
+                                         "img":"settings.images.*"
                                       } 
                                   } 
                               }    

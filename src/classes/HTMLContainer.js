@@ -29,9 +29,13 @@ define(['Container', 'HTMLBlock'], function(Container, HTMLBlock){
 				var container = this; 
 				if(block.render) 
 					this.$el.append(block.render().el); 
-				window.requestAnimationFrame(function(){ 
-					container.page.renderCSS(); 
-				}); 
+                
+                //this is a workaround for _renderSync. This needs to be changed. 
+                if(block && !blocks.renderState){
+                    window.requestAnimationFrame(function(){ 
+                        container.page.renderCSS(); 
+                    }); 
+                }
 				return this; 
 			},
 			renderBlock: function(model){ 
@@ -62,7 +66,14 @@ define(['Container', 'HTMLBlock'], function(Container, HTMLBlock){
 		   			block.$el.append(view.render()); 
 			   		return view; 
 		   		} 	
-			} 
+			}, 
+            render: function(){
+                Container.prototype.render.call(this); 
+                if(blocks && blocks.renderState){
+                    blocks.renderState(this); 
+                }
+                return this; 
+            }
 		});	
 	return HTMLContainer; 
 }); 

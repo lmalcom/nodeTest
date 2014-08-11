@@ -1,0 +1,36 @@
+{ 
+  "name": "test ", 
+  "classes": [ 
+    "HTMLContainer",  
+    "Slider" 
+  ], 
+  "content": { 
+    "view": { 
+      "blockClass": "Page" 
+    }, 
+    "children": [ 
+      { 
+        "blockClass":"Slider", 
+        "settings":{ 
+            "header":"My Stuff", 
+            "css":{ 
+                 
+            }, 
+            "type":"ImageButton", 
+            "text":[ 
+                "About", "Contact", "Something Awesome","About", "Contact", "Something Awesome","About", "Contact", "Something Awesome","About", "Contact", "Something Awesome"
+            ], 
+            "images":[
+                "http://img.foodnetwork.com/FOOD/2012/12/20/fnd_Hot-Peppers-2013-Trends_s4x3_lg.jpg", 
+                          "http://stuffpoint.com/food-network/image/174206-food-network-foodnetwork.jpg", 
+                          "http://3.bp.blogspot.com/-YogtSE2qnSw/TfNNUCSds-I/AAAAAAAAAJo/ofyYhir2nsI/s1600/food%2Bnetwork.jpg","http://img.foodnetwork.com/FOOD/2012/12/20/fnd_Hot-Peppers-2013-Trends_s4x3_lg.jpg", 
+                          "http://stuffpoint.com/food-network/image/174206-food-network-foodnetwork.jpg", 
+                          "http://3.bp.blogspot.com/-YogtSE2qnSw/TfNNUCSds-I/AAAAAAAAAJo/ofyYhir2nsI/s1600/food%2Bnetwork.jpg","http://img.foodnetwork.com/FOOD/2012/12/20/fnd_Hot-Peppers-2013-Trends_s4x3_lg.jpg", 
+                          "http://stuffpoint.com/food-network/image/174206-food-network-foodnetwork.jpg", 
+                          "http://3.bp.blogspot.com/-YogtSE2qnSw/TfNNUCSds-I/AAAAAAAAAJo/ofyYhir2nsI/s1600/food%2Bnetwork.jpg"
+            ]
+        } 
+      }   
+    ] 
+  } 
+} 

@@ -1,0 +1,74 @@
+{ 
+  "name": "test ", 
+  "classes": [ 
+    "HTMLContainer",  
+    "DescriptionBox" 
+  ], 
+  "content": { 
+    "view": { 
+      "blockClass": "Page", 
+        "css":{ 
+            "overflow-y":"auto", 
+            ".DescriptionBox":{
+                "width":"100%", 
+                "height":"200px", 
+                "padding":"10px", 
+                "background-color":"rgba(0,0,0,.5)"
+            }
+        }
+    }, 
+    "children": [ 
+      {
+          "blockClass":"DescriptionBox", 
+          "settings":{
+              "type":"h1",
+              "text":"The first example", 
+              "img":"http://img.foodnetwork.com/FOOD/2012/12/20/fnd_Hot-Peppers-2013-Trends_s4x3_lg.jpg"
+          }
+      }, 
+      { 
+          "DescriptionBox":{
+              "settings":{
+                  "img":[
+                      "http://img.foodnetwork.com/FOOD/2012/12/20/fnd_Hot-Peppers-2013-Trends_s4x3_lg.jpg", 
+                      "http://stuffpoint.com/food-network/image/174206-food-network-foodnetwork.jpg", 
+                      "http://3.bp.blogspot.com/-YogtSE2qnSw/TfNNUCSds-I/AAAAAAAAAJo/ofyYhir2nsI/s1600/food%2Bnetwork.jpg"
+                  ], 
+                  "inputs":[
+                      [
+                          {
+                              "type":"h1", 
+                              "text":"Big Title"
+
+                          }, 
+                          {
+                              "text":"The subteeeeext"
+                          }
+                      ], 
+                      [
+                          {
+                              "type":"h1", 
+                              "text":"Big Title 2" 
+
+                          }, 
+                          {
+                              "text":"The subteeeeext"
+                          }
+                      ], 
+                      [
+                          {
+                              "type":"h1", 
+                              "text":"Big Title 3" 
+
+                          }, 
+                          {
+                              "text":"The subteeeeext"
+                          }
+                      ]
+                  ]
+              }
+          }
+      }   
+    ] 
+  } 
+} 

@@ -9,7 +9,7 @@ define(['HTMLContainer', 'Button'], function(HTMLContainer){
             },
             "& > .Button":{
                 "display":"none", 
-                "max-width":"400px", 
+                //"max-width":"400px", 
                 "height":"60px",
                 "@media only screen and (min-width : 200px) and (max-width : 768px)":{
                     "display":"inline-block"
@@ -17,21 +17,27 @@ define(['HTMLContainer', 'Button'], function(HTMLContainer){
             }, 
             '.HTMLContainer':{
                 "width":"100%", 
-                "height":"auto", 
+                "height":"60px", 
                 "max-height":window.innerHeight - 60 + 'px', 
-                "max-width":"400px",
                 "padding":"10px", 
                 "box-sizing":"border-box", 
                 "background":"rgba(0,0,0,.5)", 
-                "overflow-y":"auto", 
+                "overflow":"hidden", 
                 ".Button":{
-                    "float":"left"
+                    "float":"right", 
+                    "width":"auto", 
+                    "padding":"0 5px",
+                    "margin-right":"10px", 
+                    "box-shadow":"transparent"
                 }, 
                 "@media only screen and (min-width : 200px) and (max-width : 768px)":{
                     "height":"0", 
+                    "opacity":"0", 
                     "padding":"0", 
                     ".Button":{
-                        "height":"60px"
+                        "height":"60px", 
+                        "width":"100%", 
+                        "margin-right":"0", 
                     }
                 }
             }
@@ -68,13 +74,15 @@ define(['HTMLContainer', 'Button'], function(HTMLContainer){
 		}, 
         toggleList: function(ev){
             var nav = this; 
+            var numChildren = nav.$el.find('.HTMLContainer').children().length; 
             if(nav.toggled){
                 nav.toggled = false; 
                 nav.$el.find('.HTMLContainer').attr('style', ''); 
             }else{
                 nav.toggled = true; 
                 nav.$el.find('.HTMLContainer').css({
-                    height:'auto'
+                    height:numChildren*60, 
+                    opacity:1
                 })
             }
             return this; 

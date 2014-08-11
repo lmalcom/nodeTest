@@ -124,7 +124,13 @@ define(['io'], function(io){
             _.each(collection, function(val, key, list){ 
 
                 //if key is a number then it is the index, we should assess the object inside. 
-                var blockClass = key; 
+                 
+                if(key.split(".")[0] === 'settings'){
+                    var blockClass = _extractVals({blockClass: key}, settingsOb); 
+                }else{
+                    var blockClass = {blockClass: key};
+                }
+                //var blockClass = key;
                 var attrVal, modelArr = [], viewArr = []; 
 
                 //get model and view settings 
@@ -134,7 +140,7 @@ define(['io'], function(io){
                     var col = _createCollection(blockClass, models, views); 
                     colSettings = colSettings.concat(col); 
                 }else{ 
-                    var blockClass = val.blockClass || key; 
+                    if(!blockClass) blockClass = val.blockClass || key; 
                     var returnArr = _setVals(_extractVals(val.settings, settingsOb)); 
                     
                     _.each(returnArr, function(setting){ 
@@ -142,16 +148,15 @@ define(['io'], function(io){
                             "settings": setting, 
                             blockClass: blockClass 
                         };
+                        
                         var otherThing = (val.subcollection || val.children)?
-                            {
+                            _.extend({
                                 settings: setting,
-                                blockClass: blockClass, 
                                 subcollection: _extractValsCollection((val.subcollection || val.children), settingsOb) 
-                            }:    
-                            {
-                                settings: setting,
-                                blockClass: blockClass
-                            };
+                            },blockClass):    
+                        _.extend({
+                               settings: setting,
+                            }, blockClass);
                         
                         
                         
@@ -234,7 +239,7 @@ define(['io'], function(io){
             ret.push(ob); 
         }); 
         return ret; 
-    }
+    } 
 
     //create a block from the options. If no class is specific then Block will be created 
     function createBlock(){ 
@@ -289,7 +294,6 @@ define(['io'], function(io){
                 callback = args[0].callback || null; 
             } 
         } 
-
         //get that specific class and use it 
         io.getClass.call(block, blockClass, function(klass){ 
             //add model and view 
@@ -310,6 +314,7 @@ define(['io'], function(io){
 
             //load collection 
             if(json.subcollection || json.children){ 
+                if(blockClass === 'Page') console.log('starting off the page...', callback); 
                 var arr, modarr, viewarr, subcol = (json.subcollection || json.children); 
                 ret.subcollection = arr = []; 
                 modarr = ret.model.subcollection = new Backbone.Collection(); 
@@ -317,15 +322,77 @@ define(['io'], function(io){
 
                 //get models and views from substates 
                 _.each(subcol, function(substate){ 
-                    createBlock.call(ret.view, substate, function(state){ 
-                        arr.push(state); 
-                        modarr.add(state.model); 
-                        viewarr.add(state.view); 
-                        ret.view.trigger('newBlock', state); 
-                    }); 
+                    //this should be done better
+                    //if we have a {'blockclass':{several block declarations...}} block 
+                    if(!substate.blockClass && !substate.view && !substate.model && !substate.settings && !_.isEmpty(substate)){
+                        _.each(_extractValsCollection(substate), function(subsubstate){
+                            createBlock.call(ret.view, subsubstate, function(state){ 
+                                arr.push(state); 
+                                modarr.add(state.model); 
+                                viewarr.add(state.view); 
+                                ret.view.trigger('newBlock', state); 
+                            }); 
+                        }); 
+                    }else
+                        createBlock.call(ret.view, substate, function(state){ 
+
+                            arr.push(state); 
+                            modarr.add(state.model); 
+                            viewarr.add(state.view); 
+                            ret.view.trigger('newBlock', state); 
+                        }); 
                 }); 
-            } 
-            if(typeof callback === 'function') callback(ret);           
+//                 Promise.all(subcol.map(function(substate){ 
+//                     return new Promise(function(resolve, reject){
+//                          //this should be done better
+//                         //if we have a {'blockclass':{several block declarations...}} block 
+//                         if(!substate.blockClass && !substate.view && !substate.model && !substate.settings && !_.isEmpty(substate)){
+//                             Promise.all(_extractValsCollection(substate).map(function(subsubstate){ 
+//                                 return new Promise(function(resolveInner, rejectInner){
+//                                     createBlock.call(ret.view, subsubstate, function(state){ 
+//                                         arr.push(state); 
+//                                         modarr.add(state.model); 
+//                                         viewarr.add(state.view); 
+//                                         resolveInner(state); 
+//                                         //console.log('what is this THAAAANG?', state.view.blockClass); 
+//                                     }); 
+//                                 })
+//                             })).then(function(resultsInner){
+//                                 //console.log('finished a big cray thing...', resultsInner); 
+//                                 resolve(resultsInner); 
+//                             }); 
+//                             //console.log('how many times??', blockClass); 
+//                         }else
+//                             new Promise(function(resolveInner, rejectInner){
+//                                 createBlock.call(ret.view, subsubstate, function(state){ 
+//                                     arr.push(state); 
+//                                     modarr.add(state.model); 
+//                                     viewarr.add(state.view); 
+//                                     resolveInner(state); 
+//                                     //console.log('what is this THAAAANG?', state.view.blockClass); 
+//                                 }); 
+//                             }).then(function(results){
+//                                 resolve(results); 
+//                                 if(state.view.blockClass === 'Tree') console.log('the tree is done...', p); 
+//                             }); 
+// //                             createBlock.call(ret.view, substate, function(state){ 
+// //                                 if(state.view.blockClass === 'Tree') console.log('the tree is done...', p); 
+// //                                 arr.push(state); 
+// //                                 modarr.add(state.model); 
+// //                                 viewarr.add(state.view); 
+// //                                 resolve(state); 
+// //                                 console.log('what is this thing?', state.view.blockClass); 
+// //                             }); 
+//                     }); 
+//                 })).then(function(results){
+//                     console.log('this should happen when all gets finished...', blockClass); 
+//                      if(typeof callback === 'function') callback(ret); 
+//                 }); 
+                if(typeof callback === 'function') callback(ret); 
+            }else{
+                if(typeof callback === 'function') callback(ret); 
+            }  
+            
         }); 
     }
 

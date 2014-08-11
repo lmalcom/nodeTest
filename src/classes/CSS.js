@@ -89,19 +89,57 @@ define(['require','jquery', 'underscore', 'backbone'], function(require, $, _, B
 			/*Returns a list of .Class{classCSS} for all Block prototypes on the page.
 			This is meant to be called once from the page context, so all of its children 
 			are included in its style object */ 
-			renderDefaultCSS: function(){ 
+// 			renderDefaultCSS: function(){ 
+// 				//copy the version for blocks 
+// 				var css = this, 
+// 					CSSstring = '', 
+// 					parent = css.parent, 
+// 					classes = [parent.blockClass].concat(parent.getClassAncestry()); 
+
+// 				//get list of classes 
+// 				(function addClasses(child){ 
+// 					if(child.subcollection && child.subcollection.length > 0){ 
+// 						child.subcollection.each(function(subview){ 
+// 							var newClasses = [subview.blockClass]; 
+// 							classes = classes.concat(newClasses); 
+// 							addClasses(subview); 
+// 						}); 
+// 					} 
+// 				})(this.parent); 	
+// 				classes = _.uniq(classes); 
+
+// 				//put each of the default css into the thang				
+// 				_.each(classes, function(klass){					
+// 					var klass = require(klass); 
+// 					if(klass.prototype && klass.prototype.defaultCSS){
+// 						var prot = klass.prototype; 
+// 						CSSstring += css.renderDOMString(prot.defaultCSS, '.' + prot.blockClass); 
+// 					}						
+// 				}); 
+				
+// 				return CSSstring;  
+// 			}, 
+            renderDefaultCSS: function(){ 
 				//copy the version for blocks 
 				var css = this, 
 					CSSstring = '', 
 					parent = css.parent, 
-					classes = [parent.blockClass].concat(parent.getClassAncestry()); 
+                    classes = [Object.getPrototypeOf(parent)]; 
 
 				//get list of classes 
 				(function addClasses(child){ 
 					if(child.subcollection && child.subcollection.length > 0){ 
 						child.subcollection.each(function(subview){ 
-							var newClasses = [subview.blockClass]; 
-							classes = classes.concat(newClasses); 
+                            var prot = Object.getPrototypeOf(subview); 
+							var newClasses = []; 
+                            //recurse through supers to get all the default css classes 
+                            (function findSupers(proto){ 
+                                newClasses.push(proto); 
+                                if(proto.super) findSupers(proto.super); 
+                            })(prot); 
+                            //return the class prototypes in reverse order so that the css of
+                            //later classes overrides the css of older classes
+							classes = classes.concat(newClasses.reverse()); 
 							addClasses(subview); 
 						}); 
 					} 
@@ -109,29 +147,31 @@ define(['require','jquery', 'underscore', 'backbone'], function(require, $, _, B
 				classes = _.uniq(classes); 
 
 				//put each of the default css into the thang				
-				_.each(classes, function(klass){					
-					var klass = require(klass); 
-					if(klass.prototype && klass.prototype.defaultCSS){
-						var prot = klass.prototype; 
-						CSSstring += css.renderDOMString(prot.defaultCSS, '.' + prot.blockClass);
+				_.each(classes, function(klass){	
+					if(klass.defaultCSS){
+						var prot = klass; 
+						CSSstring += css.renderDOMString(prot.defaultCSS, '.' + prot.blockClass); 
 					}						
 				}); 
-				
 				return CSSstring;  
 			},
+            keepClasses: _.memoize(function(klass){
+                
+                return klass.defaultCSS; 
+            }), 
 
 			//Renders individual block css. Meant to be called by each object on the page, like render
 			render : function(){ 
 				var css, CSSstring; 
 				css = this; 
 				CSSstring = '#' + this.parent.id + ' { '; 
+                
 				//check that there are active properties to add to the CSS string
 				if( css.active !== null ){
 					//print each of the active qualities
 					_.each(css.active, function(key, value, list){
 						CSSstring += css.renderDOMString(key, value, list); 
 					}); 
-			
 				}; 
 
 				//let children define their css as well 
@@ -141,7 +181,7 @@ define(['require','jquery', 'underscore', 'backbone'], function(require, $, _, B
 					}); 
 				}; 
 
-				//end
+				//end 
 				CSSstring += ' } '; 
 
 				//add inline CSS if necessary 

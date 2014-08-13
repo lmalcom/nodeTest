@@ -17,6 +17,7 @@ define(['postal','backbone'], function(Postal, Backbone){
 		block._setWhiteList(options);
 
 		_.defaults(block, options, _.result(this, 'defaults'));
+        if(block.model) block.model.set(options); 
 
 		// _.extend(block, attributes);
 
@@ -97,15 +98,7 @@ otherwise, get/set will be a viewblock thing for now
 		},
 		get: function(key){
 			var block = this;
-			if(!key){ //if no parameters passed in, return whitelist for everything
-				return block._getAll();
-			} else if(!_.has(block._whitelist, key)){ //if property isn't in the internal whitelist
-				return void 0;
-			} else if(!_.has(block,key) && !_.has(Object.getPrototypeOf(block),key)){ //if property doesn't exist on the block
-				return void 0;
-			} else{
-				return block[key]; //otherwise return property value
-			}
+			return block.model.get(key); 
 		}, 
 		_getAll: function(){
 			var block = this;
@@ -117,20 +110,8 @@ otherwise, get/set will be a viewblock thing for now
 		},
 		set: function(key, value){
 			var block = this;
-			if(!key){
-				return void 0;
-			} else if(!block._whitelist[key]){ //if key isn't set to true in the whitelist
-				return void 0;
-			} else if(!_.has(block,key)){ //if property doesn't exist
-				return void 0;
-			} else if(value === void 0){
-				return false;
-			} else{
-				block[key] = value;
-				block.trigger(key+':change');
-				block.trigger('change');
-				return block;
-			} 
+			block.model.set.apply(block.model, Array.prototype.slice.call(arguments)); 
+            return this; 
 		}, 
 		getID: function(){
 			return this.blockID;

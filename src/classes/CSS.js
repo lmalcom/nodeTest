@@ -207,7 +207,8 @@ define(['require','jquery', 'underscore', 'backbone'], function(require, $, _, B
 					string += ' } '; 
 
 					return string; 
-				}			
+				}	
+                console.log('css string...', string); 
 			},
 		}); 
 

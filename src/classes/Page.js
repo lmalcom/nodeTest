@@ -43,10 +43,11 @@ define(["HTMLContainer", "postal"], function(HTMLContainer, Postal){
 				this.styleSheet.type = 'text/less';  
 				this.styleSheet.innerHTML = 'body {margin:0}' + this.css.renderDefaultCSS() + this.css.render();
 			}  
+            console.log(style); 
 			less.refreshStyles(); 
 		},  
-		saveState: function(){
-			var ret = {
+		saveState: function(){ 
+			var ret = { 
 				name: this.name, 
 				content: HTMLContainer.prototype.toJSON.call(this), 
 				classes: [this.blockClass]

@@ -1,28 +1,25 @@
-define([], function(){
-    function load ( classes, callback, ctx ){ 
-        if(!classes) return []; 
-        var controller = this, 
-            cache = []; 
-
-        //require classes 
-        require(['require'].concat(classes || []), function(require){ 
-            _.each(classes, function(klass){  
-                var newClass; 
-                if(klass) newClass = require(klass); 
-                cache.push(newClass);           
+define([], function(){ 
+    function load ( classes){ 
+        return new Promise(function(resolve, reject){ 
+            if(!classes) resolve(); 
+            require(['require'].concat(classes || []), function(require){ 
+                var cache = _.map(classes, function(klass){  
+                    return require(klass);         
+                }); 
+               
+                //send back the array or if there is only one just the one class
+                (cache.length === 1)? 
+                    resolve(cache[0]): 
+                    resolve(cache); 
             }); 
-            if(typeof callback === 'function'){ 
-                (cache.length === 1)? callback.call(ctx || null, cache[0]): 
-                    callback.call(ctx || null, cache); 
-            } 
-        }); 
+        })
+        
     }; 
 
 	return {
 		//IO functions 
-        getClass: function(name, callback, ctx){ 
-            var block = this; 
-                load.call(block, [name], callback, ctx); 
+        getClass: function(name){ 
+            return load([name]); 
         }, 
 
         //returns an array of class prototypes that were asked for 

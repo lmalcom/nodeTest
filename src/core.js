@@ -6,7 +6,7 @@ define(["jquery", "underscore", "backbone", "less", "postal","Block", "Container
         //get an array of the panel objects. 
         //I vote for that!!!! 
         var controller = this; 
-        if(settings) this.loadPage(settings, callback); 
+        if(settings) this.loadPage(settings).then(callback); 
         window.postal = postal; 
     }; 
     core.prototype = { 

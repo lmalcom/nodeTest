@@ -175,6 +175,7 @@ define(['io'], function(io){
         if(collection.children || collection.subcollection){
             var chil = collection.children || collection.subcollection; 
             colSettings.subcollection = _extractValsCollection(chil, settingsOb); 
+            console.log(colSettings); 
         }
         //return the collection of models/views 
         return colSettings;             
@@ -242,70 +243,244 @@ define(['io'], function(io){
     
     function parseProps(args){
         if(arguments.length === 0) return; 
-        var blockClass = '', settings = {}, children; 
+        var blockClass = '', json = {}, callback; 
 
-        //allow ('name', {json})
+        //check that the first arg is a name, if not then it should just be the settings json 
         if(_.isString(args[0])){ 
+            //first argument is name 
             blockClass = args[0]; 
-            settings = args[1].settings || {}; 
-            children = args[1].children || args[1].subcollection; 
+
+            //allow (name, callback) or (name, json, callback) 
+            (!_.isFunction(args[1]))? 
+                json = args[1]: 
+                callback = args[1]; 
+
+            //(name, json, callback) 
+            if(_.isFunction(args[2])) callback = args[2]; 
 
         //options object or json 
         }else if(_.isObject(args[0])){ 
-            blockClass = (args[0].blockClass)? args[0].blockClass: 'Block';
-            settings = args[0].settings || args[0]; 
-            children = args[0].children || args[0].subcollection; 
+
+            //(json, callback) 
+            if(_.isFunction(args[1])){ 
+
+                //if the json has blockClass, view.blockClass property, else Block 
+                blockClass =(args[0].blockClass)?                      args[0].blockClass: 
+                            (args[0].view && args[0].view.blockClass)? args[0].view.blockClass: 
+                                                                        'Block'; 
+
+                json = args[0]; 
+                callback = args[1]; 
+            }
+            //({options})
+            else{ 
+                //name is...
+                blockClass = 
+
+                    //either the blockClass property 
+                    (args[0].blockClass)? args[0].blockClass: 
+
+                    //or view.blockClass property 
+                    (args[0].view && args[0].view.blockClass)?   args[0].view.blockClass: 
+
+                    //or Block by default 
+                    'Block'; 
+                    
+                json = args[0].settings || args[0]; 
+                callback = args[0].callback || null; 
+            } 
         } 
         
-        
+        //skeleton
+        if(json.settings){ 
+            var skel = _createSkeleton(klass.prototype.skeleton, json.settings); 
+            _.extend(json, skel); 
+        } 
         return {
             blockClass: blockClass, 
-            settings: settings, 
-            children: children
+            settings: json
         }
+    }
+
+    //create a block from the options. If no class is specific then Block will be created 
+    function createBlock(){ 
+        if(arguments.length === 0) return; 
+        var block = this, 
+            blocks = window.blocks || {}, 
+            args = Array.prototype.slice.call(arguments), 
+            blockClass = '', json = {}, callback; 
+
+        //check that the first arg is a name, if not then it should just be the settings json 
+        if(_.isString(args[0])){ 
+            //first argument is name 
+            blockClass = args[0]; 
+
+            //allow (name, callback) or (name, json, callback) 
+            (!_.isFunction(args[1]))? 
+                json = args[1]: 
+                callback = args[1]; 
+
+            //(name, json, callback) 
+            if(_.isFunction(args[2])) callback = args[2]; 
+
+        //options object or json 
+        }else if(_.isObject(args[0])){ 
+
+            //(json, callback) 
+            if(_.isFunction(args[1])){ 
+
+                //if the json has blockClass, view.blockClass property, else Block 
+                blockClass =(args[0].blockClass)?                      args[0].blockClass: 
+                            (args[0].view && args[0].view.blockClass)? args[0].view.blockClass: 
+                                                                        'Block'; 
+
+                json = args[0]; 
+                callback = args[1]; 
+            }
+            //({options})
+            else{ 
+                //name is...
+                blockClass = 
+
+                    //either the blockClass property 
+                    (args[0].blockClass)? args[0].blockClass: 
+
+                    //or view.blockClass property 
+                    (args[0].view && args[0].view.blockClass)?   args[0].view.blockClass: 
+
+                    //or Block by default 
+                    'Block'; 
+                    
+                json = args[0].settings || args[0]; 
+                callback = args[0].callback || null; 
+            } 
+        } 
+        //get that specific class and use it 
+        io.getClass.call(block, blockClass, function(klass){ 
+            //add model and view 
+            var ret   = {}; 
+
+            //SKELETON!!!!!
+            if(json.settings){ 
+                var skel = _createSkeleton(klass.prototype.skeleton, json.settings); 
+                _.extend(json, skel); 
+            } 
+
+            ret.model = _createModel(json.model || {}); 
+            ret.view  = _createView(ret.model, klass, _.extend({}, json.view, { 
+                parent: block 
+            })); 
+            if(block.model && block.model.subcollection) block.model.subcollection.add(ret.model); 
+            if(block.subcollection) block.subcollection.add(ret.view); 
+
+            //load collection 
+            if(json.subcollection || json.children){ 
+                if(blockClass === 'Page') console.log('starting off the page...', callback); 
+                var arr, modarr, viewarr, subcol = (json.subcollection || json.children); 
+                ret.subcollection = arr = []; 
+                modarr = ret.model.subcollection = new Backbone.Collection(); 
+                viewarr = ret.view.subcollection;  
+
+                //get models and views from substates 
+                _.each(subcol, function(substate){ 
+                    //this should be done better
+                    //if we have a {'blockclass':{several block declarations...}} block 
+                    if(!substate.blockClass && !substate.view && !substate.model && !substate.settings && !_.isEmpty(substate)){
+                        _.each(_extractValsCollection(substate), function(subsubstate){
+                            createBlock.call(ret.view, subsubstate, function(state){ 
+                                arr.push(state); 
+                                modarr.add(state.model); 
+                                viewarr.add(state.view); 
+                                ret.view.trigger('newBlock', state); 
+                            }); 
+                        }); 
+                    }else
+                        createBlock.call(ret.view, substate, function(state){ 
+
+                            arr.push(state); 
+                            modarr.add(state.model); 
+                            viewarr.add(state.view); 
+                            ret.view.trigger('newBlock', state); 
+                        }); 
+                }); 
+//                 Promise.all(subcol.map(function(substate){ 
+//                     return new Promise(function(resolve, reject){
+//                          //this should be done better
+//                         //if we have a {'blockclass':{several block declarations...}} block 
+//                         if(!substate.blockClass && !substate.view && !substate.model && !substate.settings && !_.isEmpty(substate)){
+//                             Promise.all(_extractValsCollection(substate).map(function(subsubstate){ 
+//                                 return new Promise(function(resolveInner, rejectInner){
+//                                     createBlock.call(ret.view, subsubstate, function(state){ 
+//                                         arr.push(state); 
+//                                         modarr.add(state.model); 
+//                                         viewarr.add(state.view); 
+//                                         resolveInner(state); 
+//                                         //console.log('what is this THAAAANG?', state.view.blockClass); 
+//                                     }); 
+//                                 })
+//                             })).then(function(resultsInner){
+//                                 //console.log('finished a big cray thing...', resultsInner); 
+//                                 resolve(resultsInner); 
+//                             }); 
+//                             //console.log('how many times??', blockClass); 
+//                         }else
+//                             new Promise(function(resolveInner, rejectInner){
+//                                 createBlock.call(ret.view, subsubstate, function(state){ 
+//                                     arr.push(state); 
+//                                     modarr.add(state.model); 
+//                                     viewarr.add(state.view); 
+//                                     resolveInner(state); 
+//                                     //console.log('what is this THAAAANG?', state.view.blockClass); 
+//                                 }); 
+//                             }).then(function(results){
+//                                 resolve(results); 
+//                                 if(state.view.blockClass === 'Tree') console.log('the tree is done...', p); 
+//                             }); 
+// //                             createBlock.call(ret.view, substate, function(state){ 
+// //                                 if(state.view.blockClass === 'Tree') console.log('the tree is done...', p); 
+// //                                 arr.push(state); 
+// //                                 modarr.add(state.model); 
+// //                                 viewarr.add(state.view); 
+// //                                 resolve(state); 
+// //                                 console.log('what is this thing?', state.view.blockClass); 
+// //                             }); 
+//                     }); 
+//                 })).then(function(results){
+//                     console.log('this should happen when all gets finished...', blockClass); 
+//                      if(typeof callback === 'function') callback(ret); 
+//                 }); 
+                if(typeof callback === 'function') callback(ret); 
+            }else{
+                if(typeof callback === 'function') callback(ret); 
+            }  
+            
+        }); 
     }
     
     function createBlock(){ 
         var controller = this, 
             props = parseProps(Array.prototype.slice.call(arguments)); 
-        if(props.settings || props.blockClass){
-            return new Promise(function(resolve, reject){ 
-                io.getClass(props.blockClass) 
-                .then(function(klass){ 
-                    
-                    //skeleton
-                    var skel = _createSkeleton(klass.prototype.skeleton || {}, props.settings); 
-                    _.extend(props, skel); 
-                    
-                    var model = _createModel(props.settings); 
-                    var view = _createView(model, klass, {parent: controller}); 
-                    if(children = (props.subcollection || props.children)){
-                        
-                        createBlockCollection(children, view)
-                        .then(function(results){
-                            //also put all of the kids in the view's collection...
-                            if(view.children) _.each(results, view.children.add, view.children); 
-                            resolve(view); 
-                        }); 
-                    }
-                    else{
+        return new Promise(function(resolve, reject){ 
+            io.getClass(props.blockClass) 
+            .then(function(klass){ 
+                var model = _createModel(props.settings); 
+                var view = _createView(model, klass, {parent: controller}); 
+                if(children = (props.settings.subcollection || props.settings.children)){
+                    Promise.all(_.map(children, function(child){
+                        return createBlock.call(view, child); 
+                    }))
+                    .then(function(results){
+                        //also put all of the kids in the view's collection...
+                        if(view.children) _.each(results, view.children.add, view.children); 
                         resolve(view); 
-                    }
-                }); 
-            });
-        }else{
-            return createBlockCollection(props, controller); 
-        }
-    }
-        
-    function createBlockCollection(json, ctx){
-        var controller = ctx || this; 
-        
-        //find a better check for this! 
-        return Promise.all(_.map(_extractValsCollection(json), function(child){
-            return createBlock.call(controller, child); 
-        }))
-    }
+                    }); 
+                }
+                else{
+                    resolve(view); 
+                }
+            }); 
+        }); 
+    } 
 
     //MODULE DEFINITION 
 	return { 

@@ -14,8 +14,11 @@ define(['Button'], function(Button){
 		}), 
 		skeleton: { 
 			model:{
+                x: 'settings.x', 
+                y: 'settings.y',
 				img: 'settings.img', 
-				message: 'settings.message'
+				message: 'settings.message', 
+                css: 'settings.css'
 			}, 
 			view: {
 				css: 'settings.css', 

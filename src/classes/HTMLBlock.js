@@ -41,8 +41,7 @@ define(['ViewBlock', 'CSS'], function(ViewBlock, CSS){
 			this.id = this.el.id = myId; 
 
 			//add css object
-			var attrs = (this.hasOwnProperty('css'))? this.get('css'): {}; 
-			this.css =  new CSS(attrs, {parent: block});
+			this.css =  new CSS(this.get('css'), {parent: block});
 		},
 		hide: function(){
 			var view, deferred; 

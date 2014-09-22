@@ -19,12 +19,12 @@ define(['io'], function(io){
         if(!skeleton) return; 
         var ret; 
         //set model, view and blockClass 
-        if(skeleton.settings || skeleton.children){ 
+        if(skeleton.settings || skeleton.children){
             ret = {}; 
-            if(skeletonClass = skeleton.blockClass){ 
+            if(skeletonClass = skeleton.blockClass){
                 ret.blockClass = _getSkeletonVals({blockClass: skeletonClass}, settings).blockClass; 
-            } 
-            if(skeletonSettings = skeleton.settings){ 
+            }
+            if(skeletonSettings = skeleton.settings){
                 ret.settings = _getSkeletonVals(skeletonSettings, settings)
             }
             if(skeletonChildren = (skeleton.children || skeleton.subcollection)){
@@ -60,69 +60,12 @@ define(['io'], function(io){
                         ret.push(newSkeleton);  
                     }); 
             }); 
-        } 
+        }
         return ret; 
     }; 
     //Takes the values from settings and places them into the skeleton of the object, if it declares one 
     function _getSkeletonVals(skeletonSettings, obSettings){ 
-        console.log('skeletonSettings...', skeletonSettings, obSettings); 
         var ret = {}; 
-        
-        //first determine if we are making one object or many 
-        if(_.isArray(skeletonSettings))
-        _.each(skeletonSettings, function(val, key){ 
-            var keys = val.split('.'); 
-            if(keys[keys.length - 1] === '*') ret = []; 
-        }); 
-        
-        //then set the settings on the array of objects 
-        if(_.isArray(ret)){ 
-            
-            //find the number of objects to create 
-            numTimes = _.reduce(obSettings, function(memo, subVal){ 
-                //return the largest 'length' attribute to be used for numTimes 
-                return (_.isArray(subVal) && subVal.length > memo)? subVal.length: memo; 
-            }, 0); 
-            //create that many objects and push them to the return array 
-            _.times(numTimes, function(index){ 
-                var newSkeleton = { 
-                    blockClass: blockClass, 
-                    settings:{} 
-                }; 
-                _.each(skeletonSettings[index].settings, function(subVal, subKey, list){ 
-
-                    //if it is an array of values use array[0] and shift it off   
-                    if(_.isArray(subVal)) newSkeleton.settings[subKey] = subVal[index] || subVal[0]; 
-                    else newSkeleton.settings[subKey] = val.settings[subKey][index] || val.settings[subKey][0]; 
-                });  
-                ret.push(newSkeleton);  
-            }); 
-            
-        //or just the single object 
-        }else{
-            //just set all of the properties on the object 
-            _.each(skeletonSettings, function(val, key){
-                if(_.isString(val)){
-                    var keys = val.split('.'); 
-                    if(keys[0] === 'settings' || keys[0] === 'Settings'){
-                        keys.shift(); 
-                        //return the value itself unless there is a * at the end 
-                        ret[key] =
-                            _.reduce(keys, function(memo, subval){
-                                return memo[subval]; 
-                            }, obSettings); 
-                    }else{
-                        ret[key] = val; 
-                    }
-                }else{
-                    ret[key] = val; 
-                }
-            }); 
-        }
-        console.log('returning...', ret); 
-        return ret; 
-        
-        
         _.each(skeletonSettings, function(val, key){
             
             //allow for 'settings.property.subproperty. or settings.arr.1, or settings.array
@@ -130,27 +73,11 @@ define(['io'], function(io){
                 var keys = val.split('.'); 
                 if(keys[0] === 'settings' || keys[0] === 'Settings'){
                     keys.shift(); 
-                    //return the value itself unless there is a * at the end 
                     if(keys[keys.length - 1] !== '*'){
                         ret[key] =
                             _.reduce(keys, function(memo, subval){
                                 return memo[subval]; 
                             }, obSettings);
-                    //otherwise create as many objects as are in the array
-                    }else{
-                        ret = [];  
-                        //find the properties that use * and get the largest of them 
-                        _.each(obSettings, function(val, key){
-                            var key = key.split('.'),
-                                blockClass = (key[0] == 'settings' || key[0] == 'Settings')?
-                                    _.reduce(key.splice(1), function(memo, val){
-                                        return memo[val]; 
-                                    }, settings): 
-                                    key[0]; 
-
-                                
-                                
-                        }); 
                     }  
                 //else if the key starts with a special operand for blocksJS. ``, math(), etc...
 //                 }else if(_isSpecial(key[0])){
@@ -162,8 +89,6 @@ define(['io'], function(io){
                 }
             }
         });
-        
-        //ret can either be a single object OR an array of objects 
         return ret; 
     }; 
     function _getSkeletonValsCollection(collection, settingsOb){ 

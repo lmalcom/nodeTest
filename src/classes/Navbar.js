@@ -46,7 +46,7 @@ define(['HTMLContainer', 'Button'], function(HTMLContainer){
             'click >.Button': 'toggleList'
         }, 
         skeleton: { 
-            view: {  
+            settings: {  
                 css: 'settings.css'
             }, 
             "children": [
@@ -64,7 +64,7 @@ define(['HTMLContainer', 'Button'], function(HTMLContainer){
                       {
                           "Button":{
                              "settings":{
-                                  "text": "settings.text.*"
+                                  "text": "settings.text"
                               } 
                           } 
                       }    

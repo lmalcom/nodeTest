@@ -21,12 +21,12 @@ define(['HTMLContainer'], function(HTMLContainer){
 			console.log('im a tree', this, 'tree.x', this.get('x'), 'tree.y', this.get('y')); 
 		}, 
 		skeleton: { 
-			view: {
-				x: 'settings.x', 
+            settings:{
+                x: 'settings.x', 
 				y: 'settings.y', 
 				scaleX: 'settings.scaleX', 
 				scaleY: 'settings.scaleY'
-			}, 
+            },
 			children: [
 				//stump
 				{
@@ -71,7 +71,7 @@ define(['HTMLContainer'], function(HTMLContainer){
 				              "&:hover": {
 				                "background-color": "rgba(200,50,50,1)",
 				                "color": "white", 
-				                "-webkit-transform":"rotateY(360deg)"
+				                "transform":"rotateY(360deg)"
 				              }
 				            }
 						}					

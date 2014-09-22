@@ -10,8 +10,8 @@
     "TextImageButton"
   ], 
   "content": { 
-    "view": { 
-      "blockClass": "Page", 
+    "blockClass": "Page", 
+    "settings":{
         "css":{ 
             "overflow-y":"auto", 
             "background":"rgb(25, 25, 25)", 
@@ -23,177 +23,21 @@
                 "padding":"0 25px"
             }, 
             "@mainColor":"#ffffff"
-        }
+        }, 
+        "images":["http://img.foodnetwork.com/FOOD/2012/12/20/fnd_Hot-Peppers-2013-Trends_s4x3_lg.jpg", 
+                  "http://stuffpoint.com/food-network/image/174206-food-network-foodnetwork.jpg", 
+                  "http://3.bp.blogspot.com/-YogtSE2qnSw/TfNNUCSds-I/AAAAAAAAAJo/ofyYhir2nsI/s1600/food%2Bnetwork.jpg"]
     },
     "children": [ 
-      {
-          "blockClass":"Navbar", 
-          "settings":{
-              "css":{
-                  "height":"60px", 
-                  "color":"@mainColor"
-              },
-              "header":"Options", 
-              "text":[
-                  "Home", 
-                  "About", 
-                  "Contact", 
-                  "Store"
-              ]
-          }
-      },
-      { 
-        "blockClass":"Pagination", 
-        "settings":{ 
-            "css":{ 
-                "height":"e('calc(100% - 60px)')", 
-                "& > .Button":{
-                    "line-height":"60px"  
-                }
-            }, 
-            "type":"TextImageButton", 
-            "images":[
-                "https://c2.staticflickr.com/4/3183/2280690723_ebe385888c_b.jpg", 
-                "http://stuffpoint.com/food-network/image/174206-food-network-foodnetwork.jpg", 
-                "http://3.bp.blogspot.com/-YogtSE2qnSw/TfNNUCSds-I/AAAAAAAAAJo/ofyYhir2nsI/s1600/food%2Bnetwork.jpg","http://img.foodnetwork.com/FOOD/2012/12/20/fnd_Hot-Peppers-2013-Trends_s4x3_lg.jpg", 
-                "http://stuffpoint.com/food-network/image/174206-food-network-foodnetwork.jpg", 
-                "http://3.bp.blogspot.com/-YogtSE2qnSw/TfNNUCSds-I/AAAAAAAAAJo/ofyYhir2nsI/s1600/food%2Bnetwork.jpg","http://img.foodnetwork.com/FOOD/2012/12/20/fnd_Hot-Peppers-2013-Trends_s4x3_lg.jpg", 
-                "http://stuffpoint.com/food-network/image/174206-food-network-foodnetwork.jpg", 
-                "http://3.bp.blogspot.com/-YogtSE2qnSw/TfNNUCSds-I/AAAAAAAAAJo/ofyYhir2nsI/s1600/food%2Bnetwork.jpg"
-            ], 
-            "text":[
-                "om nom nom!!!", 
-                "oh hey 2", 
-                "oh hey 3", 
-                "oh hey 4", 
-                "oh hey 5", 
-                "oh hey 6"
-            ]
-        } 
-      }, 
-      {
-          "blockClass":"HTMLContainer", 
-          "settings":{
-              "css":{
-                  "height":"150px", 
-                  ".DescriptionBox":{
-                      "position":"relative", 
-                      "float":"left", 
-                      "height":"100%", 
-                      "width":"33.33333333%", 
-                      "color":"darken(@mainColor, 30%)",
-                      ".Image":{
-                          "width":"100%", 
-                          "position":"absolute", 
-                          "z-index":-1
-                      }, 
-                      ".Text":{
-                          "text-align":"center", 
-                          "width":"100%", 
-                          "position":"absolute", 
-                          "z-index":1
-                      }
-                  }
-              }  
-          },
-          "children":[
-             { 
-                  "DescriptionBox":{
-                      "settings":{
-                          "img":[
-                              "http://img.foodnetwork.com/FOOD/2012/12/20/fnd_Hot-Peppers-2013-Trends_s4x3_lg.jpg", 
-                              "http://stuffpoint.com/food-network/image/174206-food-network-foodnetwork.jpg", 
-                              "http://3.bp.blogspot.com/-YogtSE2qnSw/TfNNUCSds-I/AAAAAAAAAJo/ofyYhir2nsI/s1600/food%2Bnetwork.jpg"
-                          ], 
-                          "inputs":[
-                              [
-                                  {
-                                      "type":"h1", 
-                                      "text":"Big Title"
-
-                                  }, 
-                                  {
-                                      "text":"The subteeeeext"
-                                  }
-                              ], 
-                              [
-                                  {
-                                      "type":"h1", 
-                                      "text":"Big Title 2" 
-
-                                  }, 
-                                  {
-                                      "text":"The subteeeeext"
-                                  }
-                              ], 
-                              [
-                                  {
-                                      "type":"h1", 
-                                      "text":"Big Title 3" 
-
-                                  }, 
-                                  {
-                                      "text":"The subteeeeext"
-                                  }
-                              ]
-                          ]
-                      }
-                  }
-              } 
-          ]
-      },
-      {
-          "Text":{
-              "settings":{
-                  "css":{
-                      
-                      "height":"200px", 
-                      "h2":{
-                        "color":"darken(@mainColor, 20%)"
-                      },
-                      "p":{
-                          "margin-left":"20px",
-                          "color":"darken(@mainColor, 40%)"
-                      }
-                  },
-                  "inputs":[
-                      [
-                          {
-                             "type":"h2", 
-                              "text":"Header 1" 
-                          }, 
-                          {
-                              "text":"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                          }
-                      ], 
-                      [
-                          {
-                             "type":"h2", 
-                              "text":"Header 2" 
-                          }, 
-                          {
-                              "text":"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                          }
-                      ], 
-                      [
-                          {
-                             "type":"h2", 
-                              "text":"Header 2" 
-                          }, 
-                          {
-                              "text":"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                          }
-                      ]
-                  ]
-              }
-          }
-      }, 
-      {
-          "blockClass":"Video", 
-          "settings":{
-              
-          }
-      }
+        {
+            "blockClass":"HTMLBlock", 
+            "settings":[{
+                "thang":"oh heeeey"
+            }, {
+                "thang2":"oh hey again!"
+            }]
+        }
+        
     ] 
   } 
 } 

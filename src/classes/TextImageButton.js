@@ -9,7 +9,7 @@ define(['HTMLContainer'], function(HTMLContainer){
 			img: 'http://www.caraputzrath.com/yahoo_site_admin/assets/images/hula_hoop11.30553148_std.gif', 
 		}), 
 		skeleton: { 
-			view: {
+			settings: {
 				css: 'settings.css'
 			}, 
             "children":[

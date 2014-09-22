@@ -16,7 +16,7 @@ define(['HTMLBlock'], function(HTMLBlock){
             title: 'oh heeeey'
 		}, 
 		skeleton: { 
-			model:{
+			settings:{
 				img: 'settings.img'
 			}			
 		}, 

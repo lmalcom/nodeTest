@@ -186,7 +186,9 @@ define(['require','jquery', 'underscore', 'backbone'], function(require, $, _, B
 
 				//add inline CSS if necessary 
 				this.inline(); 
+                //console.log(CSSstring); 
 				return CSSstring;  
+                
 			}, 
 
 			//renders a list of CSS values as 'key': 'value'; 

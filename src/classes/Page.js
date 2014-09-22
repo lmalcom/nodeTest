@@ -43,7 +43,8 @@ define(["HTMLContainer", "postal"], function(HTMLContainer, Postal){
 				this.styleSheet.type = 'text/less';  
 				this.styleSheet.innerHTML = 'body {margin:0}' + this.css.renderDefaultCSS() + this.css.render();
 			}  
-            console.log(style); 
+            //console.log('page render...', this.css.render()); 
+            //console.log(this.styleSheet); 
 			less.refreshStyles(); 
 		},  
 		saveState: function(){ 

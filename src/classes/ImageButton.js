@@ -13,18 +13,13 @@ define(['Button'], function(Button){
 			img: 'http://www.caraputzrath.com/yahoo_site_admin/assets/images/hula_hoop11.30553148_std.gif', 
 		}), 
 		skeleton: { 
-			model:{
-                x: 'settings.x', 
+            settings:{
+              x: 'settings.x', 
                 y: 'settings.y',
 				img: 'settings.img', 
 				message: 'settings.message', 
-                css: 'settings.css'
-			}, 
-			view: {
-				css: 'settings.css', 
-                x: 'settings.x', 
-                y: 'settings.y'
-			}			
+                css: 'settings.css'  
+            }		
 		}, 
 		template: 	function(dat){ 
 			return _.template('<a><img src="<%= data.img %>" /></a>', dat, {variable: 'data'}); 

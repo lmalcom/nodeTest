@@ -2,15 +2,12 @@ define(['postal','backbone'], function(Postal, Backbone){
 	var Block = function(options){ 
 		var block = this; 
 
-		//the following might need to be moved to the end or the beginning or something
 		_.extend(block, Backbone.Events); //extend the block with Backbone events functionality
-		//just in case the below overwrites the above
 
 		//set block specific fields 
 		block._blockID = (options && options._blockID)? 
 			options._blockID: 
 			_.uniqueId('_block'); 
-		if(options && options.blockID) block.blockID = options.blockID; 
 		if(options && options.parent) this.parent = options.parent; 
 
 		//set the whitelisted variables 
@@ -59,25 +56,12 @@ otherwise, get/set will be a viewblock thing for now
 			var blacklist = []; //array of blacklisted variables in options
 			var defaults = _.result(this, 'defaults');
 
-			// console.log('THIS IS THE WHITELIST SETTER');
-			// console.log('defaults');
-			// console.log(defaults);
-
 			//look through options to see if anything is already set in block
 			_.each(options, function(value, key){
-				//console.log('current Key: ',key);
-				if(key == '_blockID'){
-/*					console.log('defaults:  ', defaults);
-					console.log('block has:  ',_.has(block,key));
-					if(defaults)
-						console.log('defaults has:  ',_.has(defaults,key));
-*/				}
 				if(_.has(block,key) && (!defaults || !_.has(defaults,key))){
 					blacklist.push(key);
 				}
 			});
-			// console.log('blacklist');
-			// console.log(blacklist);
 			//_whitelist is the internal whitelist of variables that can be 
 			// got and set
 			var whitelistKeys = _.keys(_.defaults(_.omit(options, blacklist), defaults));

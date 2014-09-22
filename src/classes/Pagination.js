@@ -48,7 +48,7 @@ define(['Slider', 'Button', 'RowContainer'], function(Slider){
             }
         }, 
         skeleton: {  
-            view: {   
+            settings: {   
                 css: 'settings.css', 
             }, 
             "children": [ 
@@ -65,8 +65,8 @@ define(['Slider', 'Button', 'RowContainer'], function(Slider){
                       { 
                           "settings.type":{ 
                               "settings":{ 
-                                  "text": "settings.text.*", 
-                                  "img":"settings.images.*"
+                                  "text": "settings.text", 
+                                  "img":"settings.images"
                               } 
                           } 
                       }    

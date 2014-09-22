@@ -13,12 +13,6 @@ define(['HTMLContainer'], function(HTMLContainer){
             this.super.initialize.call(this, attrs); 
             console.log('oh hey, this is the cube js in the examples folder!'); 
         },
-        events:{
-            'newBlock': 'test' 
-        }, 
-        test: function(){
-            alert('testing add block!'); 
-        },
         defaultCSS: _.extend({}, HTMLContainer.prototype.defaultCSS, {
             "position": "relative",
             "perspective": "800px",
@@ -50,81 +44,60 @@ define(['HTMLContainer'], function(HTMLContainer){
             }
         }), 
 		skeleton: { 
-			view: {
+			settings: {
 				x: 'settings.x', 
 				y: 'settings.y', 
 			}, 
 			children: [
                 {
                     "blockClass":"HTMLContainer", 
-                    "settings":{
-                        
-                    }, 
                     "children":[
                         //front
                         {
-                            "view":{
-                                "blockClass":"settings.type",
+                            "blockClass":"settings.type",
+                            "settings":{
                                 "z":"100"
-                            },
-//                             "settings":{
-                                
-//                             }
+                            }
                         }, 
                         //back
                         {
-                            "view":{
-                                "blockClass":"settings.type",
+                            "blockClass":"settings.type", 
+                            "settings":{
                                 "z":"-100", 
                                 "rotateY":"180"
-                            },
-//                             "settings":{
-                                
-//                             }
+                            }
                         },
                         //left
                         {
-                            "view":{
-                                "blockClass":"settings.type",
+                            "blockClass":"settings.type",
+                            "settings":{
                                 "rotateY":"270", 
                                 "x":"-100", 
-                            },
-//                             "settings":{
-                                
-//                             }
+                            }
                         },
                         //right
                         {
-                            "view":{
-                                "blockClass":"settings.type",
+                            "blockClass":"settings.type",
+                            "settings":{
                                 "rotateY":"-270", 
                                 "x":"100",
                             },
-//                             "settings":{
-                                
-//                             }
                         },
                         //top
                         {
-                            "view":{
-                                "blockClass":"settings.type",
+                            "blockClass":"settings.type",
+                            "settings":{
                                 "rotateX":"-90", 
                                 "y":"-100",
                             },
-//                             "settings":{
-                                
-//                             }
-                        }, 
+                        },
                         //bottom
                         {
-                            "view":{
-                                "blockClass":"settings.type",
+                             "blockClass":"settings.type",
+                            "settings":{
                                 "rotateX":"90", 
                                 "y":"100", 
-                            },
-//                             "settings":{
-                                
-//                             }
+                            }
                         }
                     ]
                 }

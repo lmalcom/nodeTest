@@ -10,10 +10,14 @@ define(['HTMLContainer', 'Image', 'Text'], function(HTMLContainer){
                 'float':'left'
             },
             ".Image":{
-                'width':'25%'
+                'width':'33.333%'
             }, 
             '.Text':{
-                'width':'75%'
+                'width':'66.666%', 
+                'padding':'5px', 
+                '*':{
+                    'margin':0
+                }
             }
         }), 
 		skeleton: { 

@@ -19,16 +19,12 @@ define(['HTMLContainer'], function(HTMLContainer){
                               "text":"settings.text", 
                               "css":{
                                   "position":"absolute", 
-                                  "height":"40px", 
+                                  "height":"60px",
                                   "bottom":0, 
-                                  "background":"rgba(0,0,0,.7)", 
+                                  "background":"rgba(0,0,0,.9)", 
                                   "z-index":1, 
                                   "border-radius":0, 
-                                  "line-height":"1.5", 
-                                  "&:hover":{
-                                      "height":"100%", 
-                                      "line-height":"15"
-                                  }
+                                  "line-height":"60px"
                               }
                           }
                       }, 
@@ -40,7 +36,11 @@ define(['HTMLContainer'], function(HTMLContainer){
                               "css":{
                                   "position":"absolute", 
                                   "z-index":0, 
-                                  "border-radius":0
+                                  "border-radius":0, 
+                                  "img":{
+                                      "height":"auto", 
+                                      "width":"100%"
+                                  }
                               }
                           }
                       }

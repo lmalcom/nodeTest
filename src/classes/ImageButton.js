@@ -6,7 +6,8 @@ define(['Button'], function(Button){
 		defaultCSS: _.extend({}, Button.prototype.defaultCSS, {	
 			'padding':'5px', 
 			'img':{
-				'height':'100%'
+				'height':'100%',
+                'max-width':'100%'
 			}
 		}), 
 		defaults: _.extend({}, Button.prototype.defaults, {

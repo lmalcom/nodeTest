@@ -4,6 +4,7 @@ define(['HTMLBlock'], function(HTMLBlock){
 		superClass: 'HTMLBlock', 
 		super: HTMLBlock.prototype, 
         defaultCSS: _.extend({}, HTMLBlock.prototype.defaultCSS, {	
+            "overflow":"hidden",
 			'img':{
 				"display":"block", 
                 "margin":"auto auto", 

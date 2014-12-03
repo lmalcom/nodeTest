@@ -26,7 +26,6 @@ define(['io','create', 'query'], function(io, create, query){
                 //create Page block 
                 create.createBlock.call(controller, json.content.blockClass || json.content.view.blockClass || 'Page', json.content || {}, function(page){ 
 
-                    alert('oh hey'); 
                     //start page, if async loading is used then render immediately 
                     child.content = page; 
                     if(!settings.sync) page.view.render(); 

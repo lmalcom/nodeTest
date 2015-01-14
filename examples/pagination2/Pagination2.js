@@ -1,15 +1,23 @@
 define(['Slider', 'Button', 'RowContainer'], function(Slider){ 
+    alert('hello?'); 
     var Pagination = Slider.extend({ 
-        blockClass: 'Pagination', 
+        blockClass: 'Pagination2', 
         superClass: 'Slider', 
         super: Slider.prototype, 
         defaults: _.extend({}, Slider.prototype.defaults, {
             index: 0
         }), 
         initialize: function(attrs){
+            alert('oh hey'); 
             Slider.prototype.initialize.call(this, attrs); 
             window.pag = this; 
+            console.log('attrrrssss', attrs); 
         },
+        defaults: _.extend({}, Slider.prototype.defaults, {
+            ins: [
+                ['move', '*', 'button']
+            ],
+        }), 
         defaultCSS: { 
             'position':'relative', 
             '-webkit-user-select': 'none',
@@ -55,7 +63,8 @@ define(['Slider', 'Button', 'RowContainer'], function(Slider){
               { 
                   "blockClass":"Button", 
                   "settings":{ 
-                      "text":"<" 
+                      "text":"<", 
+                      "message":"move"
                   } 
               }, 
               {
@@ -72,44 +81,63 @@ define(['Slider', 'Button', 'RowContainer'], function(Slider){
                       }    
                   ] 
               }, 
+              {
+                  "blockClass":"HTMLContainer", 
+                  "settings":{
+                      "css":{
+                          "height":"60px", 
+                          "position":"absolute", 
+                          "bottom":0, 
+                          "left":0, 
+                          "text-align":"center", 
+                          "background":"red"
+                      }
+                  }
+              }, 
               { 
                   "blockClass":"Button", 
                   "settings":{ 
-                      "text":">" 
+                      "text":">", 
+                      "message":"move"
                   } 
-              }, 
+              }
             ] 
 		}, 
-        left: function(){
-            var numBlocks = this.$el.children('.HTMLContainer').children().length; 
-               this.index--; 
-                //hide old
-                this.$el.children('.HTMLContainer').children().css({ 
-                    'opacity':0, 
-                    'pointer-events':'none'
-                });  
-                //show new
-                this.$el.children('.HTMLContainer').children().eq(this.index%numBlocks).css({ 
-                    'opacity':1, 
-                    'pointer-events':'auto'
-                });  
-                
+        initialize: function(attrs){
+           Slider.prototype.initialize.call(this, attrs); 
+            this.on('right', this.goRight); 
+            this.on('left', this.goLeft); 
+//             postal.subscribe({
+//                 channel:'button', 
+//                 topic: 'leftClick', 
+//                 callback: function(dat){
+//                     alert('this is from initialize...'); 
+//                 }
+//             })
             return this; 
-        }, 
-        right: function(){
-            var numBlocks = this.$el.children('.HTMLContainer').children().length; 
-            this.index++; 
-            //hide old
-            this.$el.children('.HTMLContainer').children().css({ 
-                'opacity':0, 
-                'pointer-events':'none'
-            });  
-            //show new
-            this.$el.children('.HTMLContainer').children().eq(this.index%numBlocks).css({ 
-                'opacity':1, 
-                'pointer-events':'auto'
+        },
+        move: function(dat){
+            alert('its workin!');
+            console.log('data...', dat); 
+            //get the index 
+            var index = this.get('index'); 
+            
+            //clear remove active from all buttons (since we don't know which had it); 
+            this.children.each(function(child){
+                child.el.removeClass('active'); 
             }); 
             
+            //set the button at that index to the corrent color 
+            
+            return this; 
+            
+        },
+        goRight:function(dat){
+            console.log('we got somethin!', dat); 
+            return this; 
+        }, 
+        goLeft: function(){
+            console.log('going to the left...'); 
             return this; 
         }
 	});	

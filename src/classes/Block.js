@@ -12,6 +12,13 @@ define(['postal','backbone'], function(Postal, Backbone){
 			_.uniqueId('_block'); 
 		if(options && options.blockID) block.blockID = options.blockID; 
 		if(options && options.parent) this.parent = options.parent; 
+        
+        //this is a patch up for the tutorial to work until it is fully ready to set on the Block.js Class
+			if(options && options.ins){ 
+				_.each(options.ins, function(set) {
+					block.in.apply(container, set); 
+				}); 
+			}
 
 		//set the whitelisted variables 
 		block._setWhiteList(options);
